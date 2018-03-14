@@ -1,0 +1,113 @@
+ 
+
+
+ 
+ 
+ <textarea id="MathInput" rows="10" style="width: 100%;">
+            When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+  $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+</textarea>
+
+<br/>
+       
+
+<div id="MathPreview" class="preview" style=""></div>
+
+div id="MathBuffer" class="preview" style="visibility:hidden; position:absolute; top:0; left: 0"></div>
+
+
+
+
+var Preview = {
+
+      delay: 150,    // 更新后按键延迟（delay after keystroke） 
+
+      preview: null,  // 预览框对象， 在下面的init中填入
+      buffer: null,   //缓冲区对象， 在下面的init中填入
+      timeout: null, // store setTimout id
+      mjRunning: false,  // true when MathJax is processing
+      oldText: null, // used to check if an update is needed
+      
+      
+      //  Get the preview and buffer DIV's
+      Init () {
+        this.preview = document.getElementById("MathPreview");
+        this.buffer = document.getElementById("MathBuffer");
+      },
+
+切换缓冲区和预览，并显示正确的。（我们使用 visibility:hidden 而不是 display:none，因为 运行MathJax结果更精确的方式。）
+
+  SwapBuffers() {
+        var buffer = this.preview,
+        preview = this.buffer;
+        this.buffer = buffer;
+        this.preview = preview;
+        buffer.style.visibility = "hidden";
+        buffer.style.position = "absolute";
+        preview.style.position = "";
+        preview.style.visibility = "";
+},
+
+
+这被称为当一个键被按下的文本。
+
+我们检查是否已经存在更新，并清除它，如果是这样的话。
+
+然后在小延迟后设置更新（如果有更多的键被按下，更新将不会发生，直到有了,打字停顿了一下）。
+
+回调函数在设置预览对象之后设置在下面
+   Update() {
+        if (this.timeout) {
+          clearTimeout(this.timeout);
+        }
+        var callback = MathJax.Callback(["CreatePreview", Preview]);
+        callback.autoReset = true;   // 确保它可以运行不止一次。
+        this.timeout = setTimeout(callback, this.delay);
+      },
+
+
+
+创建预览和运行MathJax
+
+  如果MathJax已经在试图渲染代码，返回
+
+  如果文本没有改变，返回
+
+     否则，表明MathJax正在运行，并启动排版。完成后，调用PreviewDone.
+
+      CreatePreview() {
+        Preview.timeout = null;
+        if (this.mjRunning) return;
+
+        var text = document.getElementById("MathInput").value; // 公式输入框中的值
+
+        if (text === this.oldtext) return;
+
+        this.buffer.innerHTML = this.oldtext = text;
+
+        this.mjRunning = true;
+        MathJax.Hub.Queue(
+          ["Typeset", MathJax.Hub, this.buffer], ["PreviewDone", this]
+        );
+      },
+
+
+      表明MathJax不再运行，然后交换缓冲区以显示结果。
+      PreviewDone () {
+        this.mjRunning = false;
+        this.SwapBuffers();
+      }
+
+}
+
+
+
+Preview.Init();
+
+var inputarea = document.getElementById('MathInput');  // 公式输入框中的值
+
+
+inputarea.addEventListener('keyup', Preview.Update, false); //监听按键是否按下
+
+
+Preview.Update();

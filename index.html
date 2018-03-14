@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- TODO remove unsafe-* when v3 becomes available -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'self' https://cdnjs.cloudflare.com http://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' https://www.mathjax.org https://www.google-analytics.com https://img.shields.io https://www.paypalobjects.com; font-src 'self' https://cdnjs.cloudflare.com;" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link rel="stylesheet" href="./styles.css">-->
+
+  <meta name="description" content="Beautiful math in all browsers.">
+  <link rel="canonical" href="/">
+  <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="MathJax Atom feed">
+  <!-- Begin Jekyll SEO tag v2.3.0 -->
+  <title>MathJax | Beautiful math in all browsers.</title>
+  <meta property="og:title" content="MathJax" />
+  <meta name="author" content="MathJax Consortium" />
+  <meta property="og:locale" content="en_US" />
+  <meta name="description" content="Beautiful math in all browsers." />
+  <meta property="og:description" content="Beautiful math in all browsers." />
+
+  <link rel="canonical" href="https://www.mathjax.org/" />
+
+  <meta property="og:url" content="https://www.mathjax.org/" />
+
+  <meta property="og:site_name" content="MathJax" />
+
+  <script type="application/ld+json"></script>
+
+  <script type="text/javascript" async src="./main.js"></script>
+</head>
+
+
+<body>
+
+
+  <main>
+
+
+    <section id="features">
+      <div class="container">
+          <div class="card card--popout" id="demo">
+            <h3>Live Demo</h3>
+            <p>Type text in the box below. Include some math as MathML, wrap TeX in <code>$</code> or <code>$$</code> delimiters,
+              and ASCIImath in <code>`</code> delimiters
+            </p>
+            <textarea id="MathInput" rows="10" style="width: 100%;">
+            When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+  $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
+          </textarea>
+            <br/>
+            <br/>Preview is shown here:
+            <div id="MathPreview" class="preview" style=""></div>
+          </div>
+        </div>
+    </section>
+
+  </main>
+
+
+
+
+</body>
+</html>
